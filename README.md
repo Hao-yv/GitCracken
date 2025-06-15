@@ -5,7 +5,7 @@ Working on `GNU/Linux` (without `snap`), `Windows` and `macOS`.
 
 Author: PMExtra, forked from KillWolfVlad at [GitKraken-AUR](https://github.com/KillWolfVlad/GitKraken-AUR)
 
-✔ Verified with GitKraken v7.7.0 ~ v8.1.1
+✔ Verified with GitKraken v7.7.0 ~ v11.1.1
 
 It should support any newer version of GitKraken, unless the entrypoint code (`src/main/static/startMainProcess.js` of GitKraken source) is modified.
 
