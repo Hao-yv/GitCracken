@@ -1,71 +1,55 @@
 # GitCracken
-
 GitKraken utils for non-commercial use
 
-Working on `GNU/Linux` (without `snap`), `Windows` and `macOS`!
+Working on `GNU/Linux` (without `snap`), `Windows` and `macOS`.
 
-> WARNING! On `macOS` you should patch `GitKraken` only after first launch and full program closing!
+Author: PMExtra, forked from KillWolfVlad at [GitKraken-AUR](https://github.com/KillWolfVlad/GitKraken-AUR)
+
+✔ Verified with GitKraken v7.7.0 ~ v8.1.1
+
+It should support any newer version of GitKraken, unless the entrypoint code (`src/main/static/startMainProcess.js` of GitKraken source) is modified.
 
 ## Requirements
 
 - `Node.js` v12 LTS or later
 - `yarn`
 
-## Usage
+## Quick start
 
+- `git clone https://github.com/PMExtra/GitCracken.git`
+- `cd GitCracken/GitCracken/`
 - `yarn install`
 - `yarn build`
-- `node dist/bin/gitcracken.js --help` for more usage information
+- `yarn gitcracken patcher`
 
-### Patcher
+## Notice
 
-```bash
-$ gitcracken patcher [options] [actions...]
-```
+### It need to refresh the GitKraken account information after this patch
 
-`actions` - array of values (any order, any count)
+This patch will modify your license while GitKraken fetching your profile. So if you still got free edition, you should re-login your GitKraken account.
 
-> If `actions` is empty, will be used `auto` mode (ideal for beginners)
+Please ensure the communication with GitKraken server. Somebody may blocked the GitKraken server by the DNS or hosts file, please comment out or remove it temporarily.
 
-| Action   | Description                                 |
-|----------|---------------------------------------------|
-| `backup` | Backup `app.asar` file                      |
-| `unpack` | Unpack `app.asar` file into `app` directory |
-| `patch`  | Patch `app` directory                       |
-| `pack`   | Pack `app` directory to `app.asar` file     |
-| `remove` | Remove `app` directory                      |
+If you still got free edition after re-login. Deleting the local profile might help. (Usually the path is `%appdata%\.gitkraken` for Windows, or `~/.gitkraken` for Linux or macOS)
 
-| Option            | Description (if not defined, will be used `auto` value)         |
-|-------------------|-----------------------------------------------------------------|
-| `-a`, `--asar`    | Path to `app.asar` file                                         |
-| `-d`, `--dir`     | Path to `app` directory                                         |
-| `-f`, `--feature` | Patcher feature (from [patches](patches) dir without extension) |
+### On macOS you should patch GitKraken after first launch.
 
-> You can invoke `-f`, `--feature` several times to apply all patches!
+There is a quarantine flag while downloading an App from Internet. If you changed it before the first launch, macOS will think the App was broken.
 
-### Examples
+If you already do that, you can execute `sudo xattr -rd com.apple.quarantine /Application/GitKraken.app` to remove quarantine flag.
 
-`Auto` patch installed `GitKraken` (maybe require `sudo` privileges on `GNU/Linux`)
+Search `macos quarantine` for more details.
 
-```bash
-$ gitcracken patcher
-```
+### This patch only works with GitKraken 7.7.0 and later
 
-Use custom path to `app.asar`
+If you really want to use an older version, you can ref the commit [`011e42e`](https://github.com/PMExtra/GitCracken/commit/011e42ee8f203b30e4fd606ac47af88293fbbf10) for 7.6.x.
+For more older version, you can use the original patcher from [5cr1pt/GitKraken](https://github.com/5cr1pt/GitCracken/commit/192c695e0e850676a3c014295636b46471887477).
 
-```bash
-$ gitcracken patcher --asar ~/Downloads/gitkraken/resources/app.asar
-```
+### Disable Automatic Update
 
-Use custom `actions` (`backup`, `unpack` and `patch`)
+The patch will be overwrite after each GitKraken update. So you should patch again after each update.
 
-```bash
-$ gitcracken patcher backup unpack patch
-```
-
-## Disable Automatic Update
-
-Add this content to your `hosts` file:
+If you don't want any update, you can block the update server. Just add this content to your `hosts` file:
 
 ```text
 0.0.0.0 release.gitkraken.com
